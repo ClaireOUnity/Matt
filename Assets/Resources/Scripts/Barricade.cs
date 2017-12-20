@@ -18,7 +18,7 @@ public class Barricade : MonoBehaviour {
         health = 100;
         canRebuild = false;
         rebuildCost = 50;
-        GetComponent<SpriteRenderer>().sprite = barricadePNGs[0];
+        //GetComponent<SpriteRenderer>().sprite = barricadePNGs[0];
         CalculateCorrectSprite();
     }
 
@@ -47,7 +47,7 @@ public class Barricade : MonoBehaviour {
     
     void CalculateCorrectSprite()
     {
-        if (health > 80)
+        /*if (health > 80)
             ChangeSprite(barricadePNGs[0]);
         if (health < 80 && health > 60)
             ChangeSprite(barricadePNGs[1]);
@@ -60,6 +60,6 @@ public class Barricade : MonoBehaviour {
         if (health < 0){
             ChangeSprite(rebuildSymbol);
             canRebuild = true;
-        }
+        }*/
     }
 }

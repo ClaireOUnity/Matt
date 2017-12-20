@@ -23,6 +23,6 @@ public class MenuBehaviour : MonoBehaviour {
 
 	public void Quit()
 	{
-		Application.Quit ();
+		Application.Quit();
 	}
 }
