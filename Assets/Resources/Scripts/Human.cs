@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Human : MonoBehaviour {
 
-    protected int health;
-    protected float attackRange;
-    protected float attackSpeed;
-    protected float speed;
-    protected int damage;
+    int health;
+    float attackRange;
+    float attackSpeed;
+    float speed;
+    int damage;
 
 
     // Use this for initialization
@@ -24,23 +24,39 @@ public class Human : MonoBehaviour {
             Attack();
         else Move();
     }
-    protected bool CheckCanAttack(GameObject otherObject)
+    bool CheckCanAttack(GameObject otherObject)
     {
         if (attackRange + transform.position.x >= otherObject.transform.position.x || attackRange + transform.position.y >= otherObject.transform.position.y)
             return true;
         else return false;
     }
-    protected void Attack()
+    void Attack()
     {
         //TODO program this
 
     }
-    protected void DecreaseHealth(int amount)
+    void DecreaseHealth(int amount)
     {
         health -= amount;
     }
-    protected void Move()
+    void Move()
     {
         //TODO click and drag what trops you want to move
+    }
+    void CreateHumanWarrior()
+    {
+        health = 70;
+        attackRange = 7f;
+        attackSpeed = 3f;
+        speed = 2f;
+        damage = 6;
+    }
+    void CreateHumanArcher()
+    {
+        health = 100;
+        attackRange = 2.5f;
+        attackSpeed = 2.5f;
+        speed = 1.5f;
+        damage = 10;
     }
 }

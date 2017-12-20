@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Orc : MonoBehaviour {
 
-    protected int health;
-    protected float attackRange;
-    protected float attackSpeed;
-    protected float speed;
-    protected int damage;
-    protected Vector3 orcObjective;
-    protected GameObject lastestTarget;
-    protected Sprite spritePNG;
+    int health;
+    float attackRange;
+    float attackSpeed;
+    float speed;
+    int damage;
+    Vector3 orcObjective;
+    GameObject lastestTarget;
+    Sprite spritePNG;
 
 
 	// Use this for initialization
@@ -26,23 +26,41 @@ public class Orc : MonoBehaviour {
             Attack();
         else MoveToCapturePoint();
 	}
-    protected bool CheckCanAttack(GameObject otherObject)
+    bool CheckCanAttack(GameObject otherObject)
     {
         if (attackRange + transform.position.x >= otherObject.transform.position.x || attackRange + transform.position.y >= otherObject.transform.position.y)
             return true;
         else return false;
     }
-    protected void Attack()
+    void Attack()
     {
         //TODO program this
 
     }
-    protected void DecreaseHealth(int amount)
+    void DecreaseHealth(int amount)
     {
         health -= amount;
     }
-    protected void MoveToCapturePoint()
+    void MoveToCapturePoint()
     {
         transform.position = Vector3.MoveTowards(transform.position, orcObjective, speed);
+    }
+    void CreateOrcWarrior()
+    {
+        health = 100;
+        attackRange = 2.5f;
+        attackSpeed = 2.5f;
+        speed = 1.5f;
+        damage = 10;
+        spritePNG = Resources.Load("Orc") as Sprite;
+    }
+    void CreateOrcArcher()
+    {
+        health = 70;
+        attackRange = 7f;
+        attackSpeed = 3f;
+        speed = 2f;
+        damage = 6;
+        spritePNG = Resources.Load("OrcRanger") as Sprite;
     }
 }
