@@ -4,26 +4,46 @@ using UnityEngine;
 
 public class Barricade : MonoBehaviour {
 
-    int health;
+    public float health;
     Sprite barricadeSprite;
+	bool attack;
+	public float attackTime;
+	bool hasAttacked;
 
     // Use this for initialization
     void Start() {
-        barricadeSprite = Resources.Load("BarricadeState1") as Sprite;
-        health = 100;
+        //barricadeSprite = Resources.Load("BarricadeState1") as Sprite;
+        health = 100.0f;
+		attack = false;
+		hasAttacked = false;
+		attackTime = 2.0f;
     }
 
     // Update is called once per frame
     void Update() {
+
+		if (health <= 0)
+			Destroy (this.gameObject);
+
+		if (attack && attackTime >= 2.0f) 
+		{
+			DecreaseHealth (10);
+			attackTime = 0;
+			hasAttacked = true;
+		}
+
+		if (hasAttacked)
+			attackTime += 1.0f * Time.deltaTime;
         
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "enemy")
-            DecreaseHealth(10);
+		if (collision.tag == "enemy")
+			attack = true;
     }
 
-    void DecreaseHealth(int amount) {
-        health = -amount;
+    void DecreaseHealth(float amount) 
+	{
+        health -= amount;
     }
 }

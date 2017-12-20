@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class OrcSpawner : MonoBehaviour {
 
-    public GameObject[] Orcs;
-    GameObject[] spawnPoints;
-    Sprite orcPNG;
+	public GameObject orcPNG;
+	public int spriteCount;
+	public float timer;
+	private bool hasSpawned;
 
 	// Use this for initialization
 	void Start () {
-        orcPNG = Resources.Load("Orc") as Sprite;
-        spawnPoints = GameObject.FindGameObjectsWithTag("spawner");
+        
+		timer = 3.0f;
+		spriteCount = 0;
+		hasSpawned = false;
+		//Instantiate (orcPNG, transform.position, Quaternion.identity);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
 
-    public void CreateOrcPack()
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            Orcs[i] = new GameObject();
-            Orcs[i].gameObject.tag = "enemy";
-            Orcs[i].AddComponent<BoxCollider2D>();
-            Orcs[i].AddComponent<SpriteRenderer>();
-            Orcs[i].GetComponent<SpriteRenderer>().sprite = orcPNG;
-            Orcs[i].AddComponent<Orc>();
-            Orcs[i].transform.position = spawnPoints[Random.Range(0, 4)].transform.position;
-        }
-    }
+		if (timer >= 3.0f && spriteCount < 1) 
+		{
+			Instantiate (orcPNG, transform.position, Quaternion.identity);
+			spriteCount++;
+			hasSpawned = true;
+			timer = 0.0f;
+
+			Debug.Log ("spawn");
+		}
+
+		if (hasSpawned) 
+			timer += Time.deltaTime;
+		
+		else
+			timer = 3.0f;
+	}
 }

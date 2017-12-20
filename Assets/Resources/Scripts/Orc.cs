@@ -10,37 +10,47 @@ public class Orc : MonoBehaviour {
     float attackSpeed;
     float speed;
     int damage;
-    Vector3 orcObjective;
-    GameObject lastestTarget;
+	Vector3 orcObjective;
+    GameObject latestTarget;
     Sprite spritePNG;
     GameObject barricade1;
 
 	// Use this for initialization
 	void Start () {
         canMove = true;
-        barricade1 = GameObject.Find("WesternBarricade1");
-        orcObjective = GameObject.Find("OrcObjective").transform.position;
+		//barricade1 = GameObject.Find ("WesternBarricade1");
+
+		orcObjective = GameObject.FindGameObjectWithTag ("Base").transform.position;
+       // orcObjective = GameObject.Find("OrcObjective").transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (canMove)
-            MoveToCapturePoint();
+
+		if (canMove)
+			transform.position = Vector3.MoveTowards(transform.position, orcObjective, 0.02f);
+        
+
+		//if (canMove)
+          //  MoveToCapturePoint();
 	}
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "human")
+		Debug.Log ("ARGSFRDGDRGD");
+
+		if (collision.tag == "human")
         {
             canMove = false;
             DecreaseHealth(10);
         }
-        else if (collision.tag == "barricade")
+			else if (collision.tag == "barricade")
         {
+			Debug.Log ("barricade");
             canMove = false;
             DecreaseHealth(10);
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         canMove = true;
     }
@@ -51,6 +61,6 @@ public class Orc : MonoBehaviour {
     }
     void MoveToCapturePoint()
     {
-        transform.position = Vector3.MoveTowards(transform.position, orcObjective, speed);
+        //transform.position = Vector3.MoveTowards(transform.position, orcObjective, 2.0f);
     }
 }
