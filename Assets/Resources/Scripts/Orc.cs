@@ -5,6 +5,7 @@ using UnityEngine;
 public class Orc : MonoBehaviour {
 
     int health;
+    bool canMove;
     float attackRange;
     float attackSpeed;
     float speed;
@@ -12,31 +13,38 @@ public class Orc : MonoBehaviour {
     Vector3 orcObjective;
     GameObject lastestTarget;
     Sprite spritePNG;
-
+    GameObject barricade1;
 
 	// Use this for initialization
 	void Start () {
-
+        canMove = true;
+        barricade1 = GameObject.Find("WesternBarricade1");
         orcObjective = GameObject.Find("OrcObjective").transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (CheckCanAttack(null))
-            Attack();
-        else MoveToCapturePoint();
+        if (canMove)
+            MoveToCapturePoint();
 	}
-    bool CheckCanAttack(GameObject otherObject)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (attackRange + transform.position.x >= otherObject.transform.position.x || attackRange + transform.position.y >= otherObject.transform.position.y)
-            return true;
-        else return false;
+        if (collision.tag == "human")
+        {
+            canMove = false;
+            DecreaseHealth(10);
+        }
+        else if (collision.tag == "barricade")
+        {
+            canMove = false;
+            DecreaseHealth(10);
+        }
     }
-    void Attack()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        //TODO program this
+        canMove = true;
+    }
 
-    }
     void DecreaseHealth(int amount)
     {
         health -= amount;
@@ -44,23 +52,5 @@ public class Orc : MonoBehaviour {
     void MoveToCapturePoint()
     {
         transform.position = Vector3.MoveTowards(transform.position, orcObjective, speed);
-    }
-    void CreateOrcWarrior()
-    {
-        health = 100;
-        attackRange = 2.5f;
-        attackSpeed = 2.5f;
-        speed = 1.5f;
-        damage = 10;
-        spritePNG = Resources.Load("Orc") as Sprite;
-    }
-    void CreateOrcArcher()
-    {
-        health = 70;
-        attackRange = 7f;
-        attackSpeed = 3f;
-        speed = 2f;
-        damage = 6;
-        spritePNG = Resources.Load("OrcRanger") as Sprite;
     }
 }

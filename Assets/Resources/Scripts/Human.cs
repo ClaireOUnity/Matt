@@ -5,6 +5,7 @@ using UnityEngine;
 public class Human : MonoBehaviour {
 
     int health;
+    bool canMove;
     float attackRange;
     float attackSpeed;
     float speed;
@@ -14,27 +15,29 @@ public class Human : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        canMove = true;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (CheckCanAttack(null))
-            Attack();
-        else Move();
+        if (canMove)
+            Move();
     }
-    bool CheckCanAttack(GameObject otherObject)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (attackRange + transform.position.x >= otherObject.transform.position.x || attackRange + transform.position.y >= otherObject.transform.position.y)
-            return true;
-        else return false;
+        if (collision.tag == "enemy")
+        {
+            canMove = false;
+            DecreaseHealth(10);
+        }
     }
-    void Attack()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        //TODO program this
+        canMove = true;
+    }
 
-    }
     void DecreaseHealth(int amount)
     {
         health -= amount;
@@ -42,21 +45,5 @@ public class Human : MonoBehaviour {
     void Move()
     {
         //TODO click and drag what trops you want to move
-    }
-    void CreateHumanWarrior()
-    {
-        health = 70;
-        attackRange = 7f;
-        attackSpeed = 3f;
-        speed = 2f;
-        damage = 6;
-    }
-    void CreateHumanArcher()
-    {
-        health = 100;
-        attackRange = 2.5f;
-        attackSpeed = 2.5f;
-        speed = 1.5f;
-        damage = 10;
     }
 }

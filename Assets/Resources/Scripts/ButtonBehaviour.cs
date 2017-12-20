@@ -25,7 +25,8 @@ public class ButtonBehaviour : MonoBehaviour
     
     public void QuitApplication()
     {
-        Application.Quit();
+        GameObject thingy = new GameObject();
+        //Application.Quit();
     }
     public void ResetScene()
     {
